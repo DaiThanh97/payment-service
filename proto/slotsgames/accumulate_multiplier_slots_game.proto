@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package schema;
+
+option java_multiple_files = true;
+option java_package = "com.gadgame.schema.protobuf";
+option java_outer_classname = "AccumulateMultiplierSlotsGame";
+option go_package = "models/";
+
+message AccumulateMultiplierSlotsGameModel {
+  double max_multiplier = 1;
+}
+
+message AccumulateMultiplierSlotsGameSymbolModel {
+}
+
+
+message CreateAccumulateMultiplierSlotsGameRequest {
+  string game_name = 1;
+  repeated double available_gold_coins_bet_values = 2;
+  repeated double available_sweep_coins_bet_values = 3;
+  repeated int32 row_counts = 4;
+  double max_multiplier = 5;
+}
+
+message UpdateAccumulateMultiplierSlotsGameRequest {
+  string game_id = 1;
+  string game_name = 2;
+  repeated double available_gold_coins_bet_values = 3;
+  repeated double available_sweep_coins_bet_values = 4;
+  repeated int32 row_counts = 5;
+  double max_multiplier = 6;
+}
+
+message AddAccumulateMultiplierSlotsGameSymbolRequest {
+  string game_id = 1;
+  string name = 2;
+  int32 minimum_payline_to_appear = 3;
+  int32 chance_ratio = 4;
+  bool is_wild = 5;
+  bool is_jackpot = 6;
+  bool is_scatter = 7;
+  repeated double symbol_values = 8;
+}
+
+message UpdateAccumulateMultiplierSlotsGameSymbolRequest {
+  string game_id = 1;
+  string symbol_id = 2;
+  string name = 3;
+  int32 minimum_payline_to_appear = 4;
+  int32 chance_ratio = 5;
+  bool is_wild = 6;
+  bool is_jackpot = 7;
+  bool is_scatter = 8;
+  repeated double symbol_values = 9;
+}

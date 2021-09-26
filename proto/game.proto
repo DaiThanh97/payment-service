@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+package schema;
+
+option java_package = "com.gadgame.schema.protobuf";
+option java_outer_classname = "Game";
+option go_package = "models/";
+import "google/protobuf/timestamp.proto";
+import "slotsgames/asymmetric_reels_slots_game.proto";
+import "slotsgames/accumulate_multiplier_slots_game.proto";
+import "slotsgames/slots_game.proto";
+
+message GameModel {
+  string id = 1;
+  string name = 2;
+  oneof game {
+    SlotsGameModel slots_game = 3;
+  }
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
+  google.protobuf.Timestamp deleted_at = 10;
+}
+
+
+message GameVersionModel {
+  int64 id = 1;
+  string version_name = 2;
+  string android_url = 3;
+  string android_banner_url = 4;
+  string ios_url = 5;
+  string ios_banner_url = 6;
+  string windows_url = 7;
+  string windows_banner_url = 8;
+  string web_url = 9;
+  string web_banner_url = 10;
+  string game_id = 11;
+  google.protobuf.Timestamp created_at = 12;
+  google.protobuf.Timestamp updated_at = 13;
+  google.protobuf.Timestamp deleted_at = 14;
+}
+
+message CreateGameResponse {
+  GameModel game = 1;
+}
+
+message UpdateGameResponse {
+  GameModel game = 1;
+}
+
+message AddSlotsGameSymbolResponse {
+  GameModel game = 1;
+}
+
+message UpdateSlotsGameSymbolResponse {
+  GameModel game = 1;
+}
+
+message UploadGameVersionRequest {
+  string game_id = 1;
+  string version_name = 2;
+  bytes android_file = 3;
+  bytes android_banner_file = 4;
+  bytes ios_file = 5;
+  bytes ios_banner_file = 6;
+  bytes windows_file = 7;
+  bytes windows_banner_file = 8;
+  bytes web_file = 9;
+  bytes web_banner_file = 10;
+}
+
+message UploadGameVersionResponse {
+  GameVersionModel game_version = 1;
+}
+
+message GetGameRequest {
+  string game_id = 1;
+}
+
+message GetGameResponse {
+  GameModel game = 1;
+}
+
+
+service GameService {
+  rpc UploadGameVersion(UploadGameVersionRequest) returns (UploadGameVersionResponse) {};
+
+  rpc CreateAccumulateMultiplierSlotsGame(CreateAccumulateMultiplierSlotsGameRequest) returns (CreateGameResponse) {};
+  rpc UpdateAccumulateMultiplierSlotsGame(UpdateAccumulateMultiplierSlotsGameRequest) returns (UpdateGameResponse) {};
+  rpc AddAccumulateMultiplierSlotsGameSymbol(AddAccumulateMultiplierSlotsGameSymbolRequest) returns (AddSlotsGameSymbolResponse) {};
+  rpc UpdateAccumulateMultiplierSlotsGameSymbol(UpdateAccumulateMultiplierSlotsGameSymbolRequest) returns (UpdateSlotsGameSymbolResponse) {};
+
+  rpc CreateAsymmetricReelsSlotsGame(CreateAsymmetricReelsSlotsGameRequest) returns (CreateGameResponse) {};
+  rpc UpdateAsymmetricReelsSlotsGame(UpdateAsymmetricReelsSlotsGameRequest) returns (UpdateGameResponse) {};
+  rpc AddAsymmetricReelsSlotsGameSymbol(AddAsymmetricReelsSlotsGameSymbolRequest) returns (AddSlotsGameSymbolResponse) {};
+  rpc UpdateAsymmetricReelsSlotsGameSymbol(UpdateAsymmetricReelsSlotsGameSymbolRequest) returns (UpdateSlotsGameSymbolResponse) {};
+
+  rpc GetGame(GetGameRequest) returns (GetGameResponse) {};
+}
+
+service AccumulateMultiplierSlotsGameService {
+  rpc CreateGame(CreateAccumulateMultiplierSlotsGameRequest) returns (CreateGameResponse) {};
+  rpc UpdateGame(UpdateAccumulateMultiplierSlotsGameRequest) returns (UpdateGameResponse) {};
+  rpc AddSymbol(AddAccumulateMultiplierSlotsGameSymbolRequest) returns (AddSlotsGameSymbolResponse) {};
+  rpc UpdateSymbol(UpdateAccumulateMultiplierSlotsGameSymbolRequest) returns (UpdateSlotsGameSymbolResponse) {};
+  rpc GetGame(GetGameRequest) returns (GetGameResponse) {};
+}
+
+service AsymmetricReelsSlotsGameService {
+  rpc CreateGame(CreateAsymmetricReelsSlotsGameRequest) returns (CreateGameResponse) {};
+  rpc UpdateGame(UpdateAsymmetricReelsSlotsGameRequest) returns (UpdateGameResponse) {};
+  rpc AddSymbol(AddAsymmetricReelsSlotsGameSymbolRequest) returns (AddSlotsGameSymbolResponse) {};
+  rpc UpdateSymbol(UpdateAsymmetricReelsSlotsGameSymbolRequest) returns (UpdateSlotsGameSymbolResponse) {};
+  rpc GetGame(GetGameRequest) returns (GetGameResponse) {};
+}
